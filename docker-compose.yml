@@ -1,15 +1,15 @@
 version: "3.2"
 
 services:
-  # database:
-    # image: docker.arvancloud.ir/mysql:8.4
-    # container_name: mysql_db
-    # ports:
-    #   - 3306:3306
-    # environment:
-    #   - MYSQL_ROOT_PASSWORD=root
-    # networks:
-    #   - s4_network
+  database:
+    image: docker.arvancloud.ir/mysql:8.4
+    container_name: mysql_container
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - s4_network
   client:
     build: ./s4-front
     container_name: client_container
@@ -24,9 +24,8 @@ services:
       - 3000:3000
     networks:
       - s4_network
-    # depends_on:
-    #   - database
-
+    depends_on:
+      - database
 
 networks:
   s4_network:
