@@ -33,6 +33,8 @@ services:
       - MYSQL_URL=mysql://root:root@mysql_container/s4_sut
       - SECRET_KEY=r8kveiqst3gaym9hdjpw
       - SITE_KEY=4nma7h0vqd
+      - RATE_LIMIT_MAX=10
+      - RATE_LIMIT_TIME_WINDOW="1 minute"
     networks:
       - s4_network
 

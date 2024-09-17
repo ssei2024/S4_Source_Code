@@ -3,7 +3,7 @@ module.exports = async (fastify) => {
 	fastify.after((err) => {
 		if (err) {
 			console.log(err);
-			process.exit(0);
 		}
+		console.log("multipart initiated ...");
 	});
 };

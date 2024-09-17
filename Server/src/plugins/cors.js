@@ -7,5 +7,6 @@ module.exports = async (fastify) => {
 			console.log(err);
 			process.exit(0);
 		}
+		console.log("cors policy initiated ...");
 	});
 };

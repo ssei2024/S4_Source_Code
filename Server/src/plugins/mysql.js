@@ -8,5 +8,6 @@ module.exports = async (fastify) => {
 			console.log(err);
 			process.exit(0);
 		}
+		console.log("connected to mysql ...");
 	});
 };
