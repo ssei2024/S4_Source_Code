@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  namespace: s4-app
+data:
+  MYSQL_ROOT_PASSWORD: "root"

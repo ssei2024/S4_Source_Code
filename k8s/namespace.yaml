@@ -1,0 +1,4 @@
+apiVersion: v1
+king: NameSpace
+metadata:
+  name: s4-app

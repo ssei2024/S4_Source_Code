@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  namespace: s4-app
+spec:
+  replicas: 1
+  selector:
+    matchLables:
+      app: mysql
+  template:
+    metadata:
+      app: mysql
+    spec:
+      containers:
+      - name: mysql_container
+        image: docker.arvancloud.ir/mysql:8.4
+        ports:
+        - containerPort: 3306
+        envFrom:
+        - configMapRef:
+            name: mysql-config
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+  namespace: s4-app
+spec:
+  replicas: 1
+  selector:
+    matchLables:
+      app: server
+  template:
+    metadata:
+      app: server
+    spec:
+      containers:
+      - name: server_container
+        image: s4-server:v1.0.0
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: server-config
+  
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+  namespace: s4-app
+spec:
+  replicas: 1
+  selector:
+    matchLables:
+      app: client
+  template:
+    metadata:
+      app: client
+    spec:
+      containers:
+      - name: client_container
+        image: s4-client:v1.0.0
+        ports:
+        - containerPort: 4173
+        envFrom:
+        - configMapRef:
+            name: client-config

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: client-config
+  namespace: s4-app
+data:
+  VITE_BASE_URL: "http://0.0.0.0:3000"
+  VITE_HOST: "0.0.0.0"
