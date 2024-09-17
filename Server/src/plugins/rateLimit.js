@@ -1,7 +1,7 @@
 module.exports = async (fastify) => {
 	await fastify.register(require("@fastify/rate-limit"), {
-		max: process.env.RATE_LIMIT_MAX,
-		timeWindow: process.env.RATE_LIMIT_TIME_WINDOW,
+		max: 10,
+		timeWindow: "1 minute",
 	});
 	fastify.after((err) => {
 		if (err) {
