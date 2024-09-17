@@ -11,14 +11,13 @@ let token = "";
 module.exports = (fastifyInstance) => {
 	fastify = fastifyInstance;
 	return async (req, res) => {
-
 		initValuesFromRequest(req);
 
 		if (!name || !email || !nationalCode || !token)
-			return res.code(500).send("Empty Necessary Fields!");
+			return res.code(400).send("Empty Necessary Fields!");
 
 		if (nationalCode.length > 10 || studentId.length > 9)
-			return res.code(500).send("Wrong Fields!");
+			return res.code(400).send("Wrong Fields!");
 
 		await arcaptcha
 			.verify(
@@ -27,9 +26,14 @@ module.exports = (fastifyInstance) => {
 				(challenge_id = token)
 			)
 			.then((data) => {
+				console.log("adding user to db");
+
 				if (data) {
 					return addUserToDB(res);
 				}
+			})
+			.catch((err) => {
+				console.log(err);
 			});
 	};
 };

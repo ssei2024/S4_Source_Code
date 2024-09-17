@@ -1,7 +1,7 @@
 version: "3.2"
 
 services:
-  database:
+  mysql:
     image: docker.arvancloud.ir/mysql:8.4
     container_name: mysql_container
     ports:
@@ -10,23 +10,31 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     networks:
       - s4_network
+
   client:
     build: ./s4-front
     container_name: client_container
     ports:
       - 4173:4173
+    environment:
+      - VITE_BASE_URL=http://0.0.0.0:3000
+      - VITE_HOST=0.0.0.0
     networks:
       - s4_network
+
   server:
     build: ./s4-back
     container_name: server_container
     ports:
       - 3000:3000
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - MYSQL_URL=mysql://root:root@mysql_container/s4_sut
+      - SECRET_KEY=r8kveiqst3gaym9hdjpw
+      - SITE_KEY=4nma7h0vqd
     networks:
       - s4_network
-    depends_on:
-      - database
 
 networks:
   s4_network:
-    driver: bridge

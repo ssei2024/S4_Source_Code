@@ -16,5 +16,6 @@
     "fastify": "^4.26.2",
     "nodemon": "^3.1.0",
     "pump": "^3.0.0"
-  }
+  },
+  "packageManager": "yarn@4.5.0"
 }

@@ -1,0 +1,4 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{"name": "asdf", "email": "adf", "nationalCode": "2081106833", "studentId": "", "attendType": "virtual"}
