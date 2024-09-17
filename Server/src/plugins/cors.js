@@ -1,5 +1,5 @@
-module.exports = (fastify) => {
-	fastify.register(require("@fastify/cors"), {
+module.exports = async (fastify) => {
+	await fastify.register(require("@fastify/cors"), {
 		origin: "*",
 	});
 	fastify.after((err) => {

@@ -1,10 +1,12 @@
-module.exports = (port, host) => {
+module.exports = async (port, host) => {
 	const fastify = require("fastify")({ logger: true });
 
-	require("./plugins/mysql.js")(fastify);
-	require("./plugins/multipart.js")(fastify);
-	require("./plugins/cors.js")(fastify);
-	fastify.register(require("./routes/users/index.js"));
+	await require("./plugins/mysql.js")(fastify);
+	await require("./plugins/multipart.js")(fastify);
+	await require("./plugins/cors.js")(fastify);
+	await require("./plugins/rateLimit.js")(fastify);
+
+	await fastify.register(require("./routes/users"));
 
 	fastify.listen({ port, host });
 };
