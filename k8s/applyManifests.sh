@@ -1,4 +1,3 @@
-kubectl apply -f namespaces.yaml
 kubectl apply -f configmaps/server.yaml
 kubectl apply -f configmaps/mysql.yaml
 kubectl apply -f configmaps/client.yaml

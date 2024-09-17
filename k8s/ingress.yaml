@@ -11,14 +11,14 @@ spec:
       http:
         paths:
           - path: /client
-            pathType: prefix
+            pathType: Prefix
             backend:
               service:
                 name: client-service
                 port:
                   number: 4173
           - path: /server
-            pathType: prefix
+            pathType: Prefix
             backend:
               service:
                 name: server-service

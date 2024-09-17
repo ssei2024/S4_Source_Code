@@ -6,14 +6,15 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLables:
+    matchLabels:
       app: mysql
   template:
     metadata:
-      app: mysql
+      labels:
+        app: mysql
     spec:
       containers:
-      - name: mysql_container
+      - name: mysql
         image: docker.arvancloud.ir/mysql:8.4
         ports:
         - containerPort: 3306
@@ -22,7 +23,6 @@ spec:
             name: mysql-config
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,23 +31,23 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLables:
+    matchLabels:
       app: server
   template:
     metadata:
-      app: server
+      labels:
+        app: server
     spec:
       containers:
-      - name: server_container
-        image: s4-server:v1.0.0
-        ports:
-        - containerPort: 3000
-        envFrom:
-        - configMapRef:
-            name: server-config
-  
----
+        - name: server
+          image: bardiark03/s4-server:v1.0.0
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: server-config
 
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -56,17 +56,18 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLables:
+    matchLabels:
       app: client
   template:
     metadata:
-      app: client
+      labels:
+        app: client
     spec:
       containers:
-      - name: client_container
-        image: s4-client:v1.0.0
-        ports:
-        - containerPort: 4173
-        envFrom:
-        - configMapRef:
-            name: client-config
+        - name: client
+          image: bardiark03/s4-client:v1.0.0
+          ports:
+            - containerPort: 4173
+          envFrom:
+            - configMapRef:
+                name: client-config
