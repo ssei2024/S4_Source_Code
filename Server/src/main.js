@@ -7,7 +7,7 @@ module.exports = async (port, host) => {
 	await require("./plugins/cors.js")(fastify);
 	await require("./plugins/rateLimit.js")(fastify);
 
-	await require("./Errors/schemaError.js")(app, fastify);
+	await require("./Errors")(app, fastify);
 
 	await fastify.register(require("./routes/users"));
 
