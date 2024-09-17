@@ -2,7 +2,7 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name" : "bardia",
+    
     "email" : "bardia@gmail.com",
     "nationalCode" : "2081106833"
 }
