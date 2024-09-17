@@ -20,7 +20,6 @@ function getQueryString() {
 }
 
 function handleUserCountSuccess(res, data) {
-	
 	updateCounterVars(data[0]);
 	console.info({ "virtual & onSite": both, onSite, virtual });
 	res.send({ "virtual & onSite": both, onSite, virtual });

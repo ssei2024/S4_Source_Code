@@ -6,35 +6,19 @@ let email = "";
 let nationalCode = "";
 let studentId = "";
 let attendType = "";
-let token = "";
 
 module.exports = (fastifyInstance) => {
 	fastify = fastifyInstance;
 	return async (req, res) => {
 		initValuesFromRequest(req);
 
-		if (!name || !email || !nationalCode || !token)
+		if (!name || !email || !nationalCode)
 			return res.code(400).send("Empty Necessary Fields!");
 
 		if (nationalCode.length > 10 || studentId.length > 9)
 			return res.code(400).send("Wrong Fields!");
 
-		await arcaptcha
-			.verify(
-				(secret_key = process.env.SECRET_KEY),
-				(site_key = process.env.SITE_KEY),
-				(challenge_id = token)
-			)
-			.then((data) => {
-				console.log("adding user to db");
-
-				if (data) {
-					return addUserToDB(res);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		return addUserToDB(res);
 	};
 };
 
@@ -44,7 +28,6 @@ function initValuesFromRequest(req) {
 	nationalCode = req.body?.nationalCode;
 	studentId = req.body?.studentId;
 	attendType = req.body?.attendType;
-	token = req.body?.token;
 }
 
 async function addUserToDB(res) {

@@ -4,7 +4,7 @@ module.exports = (port, host) => {
 	require("./plugins/mysql.js")(fastify);
 	require("./plugins/multipart.js")(fastify);
 	require("./plugins/cors.js")(fastify);
-	require("./routes")(fastify);
+	fastify.register(require("./routes/users/index.js"));
 
 	fastify.listen({ port, host });
 };
