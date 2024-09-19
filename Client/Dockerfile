@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 4173
 
-CMD ["ls"]
+CMD ["npm","run","prod"]
