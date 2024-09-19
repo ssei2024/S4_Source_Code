@@ -52,15 +52,12 @@
                     <li>دانشجویان درس مهندسی نرم‌افزار به جهت تکمیل فرایند دریافت نمرات خود، بایستی فیلد «شماره دانشجویی» را پر نمایند.</li>
                     <li>با ثبت‌نام در رویداد در خبرنامه انجمن علمی مهندسی نرم‌افزار عضو می‌شوید.</li>
                 </ul>
-    
-                <arcaptchaVue3 :callback="sendDataToBack" site_key="4nma7h0vqd" :invisible="true" ref="widget"></arcaptchaVue3>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import arcaptchaVue3 from "arcaptcha-vue3";
 import { ref } from 'vue'
 
 import Earth from "@/assets/svg/signup-earth.svg"
@@ -84,13 +81,6 @@ export default {
             allOnSiteUsersCount: 0
         }
     },
-    components: {
-        arcaptchaVue3
-    },
-    setup() {
-        const widget = ref(null)
-        return { widget }
-    },
     methods: {
         checkSignupConditions() {
             this.isLoading = true
@@ -104,10 +94,7 @@ export default {
                 return;
             }
 
-            this.showCaptcha()
-        },
-        showCaptcha() {
-            this.$refs.widget.execute();
+            this.sendDataToBack()
         },
         initStates() {
             this.isNameFilled = true;
@@ -126,14 +113,13 @@ export default {
         handleFileUpload(event) {
             this.selectedFile = event.target.files[0];
         },
-        async sendDataToBack(token) {
+        async sendDataToBack() {
             const formData = {
                 name: this.name,
                 email: this.email,
                 nationalCode: this.nationalCode,
                 studentId: this.studentId,
-                attendType: this.attendType,
-                token
+                attendType: this.attendType
             }
 
             try {

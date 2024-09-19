@@ -19,16 +19,17 @@ module.exports = {
 				maxLength: 10,
 			},
 			studentId: {
-				type: "string",
-				pattern: "^[0-9]{8,9}$",
-				nullable: true,
+				anyOf: [
+					{ type: "string", pattern: "^[0-9]{8,9}$" },
+					{ type: "string", maxLength: 0 },
+					{ type: "null" },
+				],
 			},
 			attendType: {
 				type: "string",
 				enum: ["virtual", "onSite", "both"],
-				nullable: true,
 			},
 		},
-		additionalProperties: false,
+		additionalProperties: true,
 	},
 };
