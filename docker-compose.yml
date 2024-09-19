@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   mysql:
-    image: docker.arvancloud.ir/mysql:8.4
+    image: mysql:8.4
     container_name: mysql_container
     ports:
       - 3306:3306
