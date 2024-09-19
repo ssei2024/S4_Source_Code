@@ -12,7 +12,7 @@ services:
       - s4_network
 
   client:
-    build: ./s4-front
+    build: ./Client
     container_name: client_container
     ports:
       - 4173:4173
@@ -23,7 +23,7 @@ services:
       - s4_network
 
   server:
-    build: ./s4-back
+    build: ./Server
     container_name: server_container
     ports:
       - 3000:3000
