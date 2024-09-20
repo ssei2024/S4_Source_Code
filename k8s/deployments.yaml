@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: bardiark03/s4-server:v1.0.0
+          image: bardiark03/s4-server:v1.0.1
           ports:
             - containerPort: 3000
           envFrom:
@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: bardiark03/s4-client:v1.0.0
+          image: bardiark03/s4-client:v1.0.1
           ports:
             - containerPort: 4173
           envFrom:

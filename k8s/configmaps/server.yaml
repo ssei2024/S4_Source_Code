@@ -6,4 +6,4 @@ metadata:
 data:
   SERVER_PORT: "3000"
   SERVER_HOST: "0.0.0.0"
-  MYSQL_URL: "mysql://root:root@mysql_service/s4_sut"
+  MYSQL_URL: "mysql://root:root@mysql-service:3306/s4_db"

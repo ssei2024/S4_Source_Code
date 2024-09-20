@@ -5,3 +5,4 @@ metadata:
   namespace: s4-app
 data:
   MYSQL_ROOT_PASSWORD: "root"
+  MYSQL_DATABASE: "s4_db"
