@@ -8,6 +8,8 @@ services:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - s4_network
 
@@ -31,6 +33,7 @@ services:
       - SERVER_PORT=3000
       - SERVER_HOST=0.0.0.0
       - MYSQL_URL=mysql://root:root@mysql_container/s4_sut
+    restart: always
     networks:
       - s4_network
 
