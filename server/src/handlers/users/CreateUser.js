@@ -17,10 +17,11 @@ module.exports = (fastify) => {
 				attendType,
 			])
 			.then(() => {
-				res.code(200);
+				return res.code(200).send({ message: "user added successfuly ..." });
 			})
 			.catch((err) => {
 				console.log(err);
+				return res.code(500).send({ message: "operation failed!" });
 			});
 	};
 };

@@ -10,6 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql-data:/var/lib/mysql
     networks:
       - s4_network
 
@@ -19,7 +20,7 @@ services:
     ports:
       - 4173:4173
     environment:
-      - VITE_BASE_URL=http://0.0.0.0:3000
+      - VITE_BASE_URL=http://localhost:3000
       - VITE_HOST=0.0.0.0
     networks:
       - s4_network
@@ -39,3 +40,6 @@ services:
 
 networks:
   s4_network:
+
+volumes:
+  mysql-data:
