@@ -4,10 +4,9 @@ let onSite = 0;
 
 module.exports = (fastify) => {
 	return async (req, res) => {
-		await fastify.mysql
-			.query(getQueryString())
+		await getUsersCountFromDB(fastify)
 			.then((data) => {
-				return handleUserCountSuccess(res, data);
+				return handleUserCountSuccess(res, data[0]);
 			})
 			.catch((e) => {
 				return handleUserCountErrors(res, e);
@@ -15,20 +14,25 @@ module.exports = (fastify) => {
 	};
 };
 
+async function getUsersCountFromDB(fastify) {
+	return await fastify.mysql.query(getQueryString());
+}
+
 function getQueryString() {
-	return "(SELECT COUNT(*) FROM users WHERE attendtype='virtual') UNION (SELECT COUNT(*) FROM users WHERE attendtype='both') UNION (SELECT COUNT(*) FROM users WHERE attendtype='onSite')";
+	return `
+	(SELECT COUNT(*) FROM users WHERE attendtype='virtual')
+		UNION
+	(SELECT COUNT(*) FROM users WHERE attendtype='both')
+		UNION
+	(SELECT COUNT(*) FROM users WHERE attendtype='onSite')`;
 }
 
 function handleUserCountSuccess(res, data) {
-	updateCounterVars(data[0]);
-	console.info({ "virtual & onSite": both, onSite, virtual });
-	res.send({ "virtual & onSite": both, onSite, virtual });
-}
-
-function updateCounterVars(dataArray) {
-	virtual = dataArray[0]["COUNT(*)"];
-	both = dataArray[1]["COUNT(*)"];
-	onSite = dataArray[2]["COUNT(*)"];
+	res.send({
+		"virtual & onSite": data[1]["COUNT(*)"],
+		onSite: data[2]["COUNT(*)"],
+		virtual: data[0]["COUNT(*)"],
+	});
 }
 
 function handleUserCountErrors(res, e) {

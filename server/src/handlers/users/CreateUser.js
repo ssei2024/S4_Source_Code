@@ -1,31 +1,40 @@
 module.exports = (fastify) => {
 	return async (req, res) => {
-		const {
-			name,
-			email,
-			nationalCode,
-			studentId = "",
-			attendType = "",
-		} = req.body;
-
-		await fastify.mysql
-			.query(getAddUserQuery(), [
-				name,
-				email,
-				nationalCode,
-				studentId,
-				attendType,
-			])
+		await addUserToDB(fastify, req.body)
 			.then(() => {
-				return res.code(200).send({ message: "user added successfuly ..." });
+				return handleAddUserToDbSuccess(res);
 			})
 			.catch((err) => {
-				console.log(err);
-				return res.code(500).send({ message: "operation failed!" });
+				return handleAddUserToDbErrors(res, err);
 			});
 	};
 };
 
+async function addUserToDB(
+	fastify,
+	{ name, email, nationalCode, studentId = "", attendType = "" }
+) {
+	return await fastify.mysql.query(getAddUserQuery(), [
+		name,
+		email,
+		nationalCode,
+		studentId,
+		attendType,
+	]);
+}
+
+function handleAddUserToDbSuccess(res) {
+	res.send({ message: "user added successfuly ..." });
+}
+function handleAddUserToDbErrors(res, err) {
+	console.log(err);
+	res.code(500).send({ message: "operation failed!" });
+}
+
 function getAddUserQuery() {
-	return "INSERT INTO users (name,email,nationalCode,studentId,attendType) VALUES (?,?,?,?,?)";
+	return `
+	INSERT INTO users
+	(name,email,nationalCode,studentId,attendType)
+		VALUES
+	(?,?,?,?,?)`;
 }
