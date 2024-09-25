@@ -1,7 +1,3 @@
-let virtual = 0;
-let both = 0;
-let onSite = 0;
-
 module.exports = (fastify) => {
 	return async (req, res) => {
 		await getUsersCountFromDB(fastify)
@@ -20,18 +16,18 @@ async function getUsersCountFromDB(fastify) {
 
 function getQueryString() {
 	return `
-	(SELECT COUNT(*) FROM users WHERE attendtype='virtual')
-		UNION
 	(SELECT COUNT(*) FROM users WHERE attendtype='both')
 		UNION
-	(SELECT COUNT(*) FROM users WHERE attendtype='onSite')`;
+	(SELECT COUNT(*) FROM users WHERE attendtype='onSite')
+		UNION
+	(SELECT COUNT(*) FROM users WHERE attendtype='virtual')`;
 }
 
 function handleUserCountSuccess(res, data) {
 	res.send({
-		"virtual & onSite": data[1]["COUNT(*)"],
-		onSite: data[2]["COUNT(*)"],
-		virtual: data[0]["COUNT(*)"],
+		"virtual & onSite": data[0]["COUNT(*)"],
+		onSite: data[1]["COUNT(*)"],
+		virtual: data[2]["COUNT(*)"],
 	});
 }
 
