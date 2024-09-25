@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@fastify/jwt": "^9.0.1",
+    "fastify-bcrypt": "^1.0.1"
+  }
+}

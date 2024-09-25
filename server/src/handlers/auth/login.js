@@ -1,40 +1,21 @@
-module.exports = (fastify) => {
-	return async (req, res) => {
-		await addUserToDB(fastify, req.body)
-			.then(() => {
-				return handleAddUserToDbSuccess(res);
-			})
-			.catch((err) => {
-				return handleAddUserToDbErrors(res, err);
-			});
-	};
-};
+fastify.post("/login", async (req, res) => {
+    const { username, password } = req.body;
 
-async function addUserToDB(
-	fastify,
-	{ name, email, nationalCode, studentId = "", attendType = "" }
-) {
-	return await fastify.mysql.query(getAddUserQuery(), [
-		name,
-		email,
-		nationalCode,
-		studentId,
-		attendType,
-	]);
-}
+    const result = await fastify.pg.query(
+        "SELECT * FROM users WHERE username=$1",
+        [username]
+    );
+    if (result.rowCount === 0)
+        return res.code(400).send("User Does Not Exist!");
 
-function handleAddUserToDbSuccess(res) {
-	res.send({ message: "user added successfuly ..." });
-}
-function handleAddUserToDbErrors(res, err) {
-	console.log(err);
-	res.code(500).send({ message: "operation failed!" });
-}
+    const hashedPassword = result.rows[0].password;
 
-function getAddUserQuery() {
-	return `
-	INSERT INTO users
-	(name,email,nationalCode,studentId,attendType)
-		VALUES
-	(?,?,?,?,?)`;
-}
+    if (!(await fastify.bcrypt.compare(password, hashedPassword)))
+        return res.code(400).send("Wrong Password!");
+
+    const jwt = fastify.jwt.sign(
+        { id: result.rows[0].id, username, password },
+        { expiresIn: "1h" }
+    );
+    return res.send({ jwt });
+});

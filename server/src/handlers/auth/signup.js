@@ -14,13 +14,28 @@ async function addUserToDB(
 	fastify,
 	{ name, email, nationalCode, studentId = "", attendType = "" }
 ) {
-	return await fastify.mysql.query(getAddUserQuery(), [
-		name,
-		email,
-		nationalCode,
-		studentId,
-		attendType,
-	]);
+	// return await fastify.mysql.query(getAddUserQuery(), [
+	// 	name,
+	// 	email,
+	// 	nationalCode,
+	// 	studentId,
+	// 	attendType,
+	// ]);
+
+	const { username, password } = req.body;
+	const hashedPassword = await fastify.bcrypt.hash(password);
+
+	await fastify.pg
+		.query("INSERT INTO users (username,password) VALUES ($1,$2)", [
+			username,
+			hashedPassword,
+		])
+		.then(() => {
+			return res.send("signup successfuly");
+		})
+		.catch((err) => {
+			return res.code(400).send(err);
+		});
 }
 
 function handleAddUserToDbSuccess(res) {
@@ -38,3 +53,19 @@ function getAddUserQuery() {
 		VALUES
 	(?,?,?,?,?)`;
 }
+
+//===========================
+// const { username, password } = req.body;
+// 		const hashedPassword = await fastify.bcrypt.hash(password);
+
+// 		await fastify.pg
+// 			.query("INSERT INTO users (username,password) VALUES ($1,$2)", [
+// 				username,
+// 				hashedPassword,
+// 			])
+// 			.then(() => {
+// 				return res.send("signup successfuly");
+// 			})
+// 			.catch((err) => {
+// 				return res.code(400).send(err);
+// 			});
