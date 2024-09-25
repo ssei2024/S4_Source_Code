@@ -5,7 +5,7 @@ module.exports = (fastify, opts, done) => {
 		{
 			method: "POST",
 			url: "/",
-			handler: createResumeHandler,
+			handler: createResumeHandler.createResume,
 		},
 	];
 

@@ -5,13 +5,13 @@ module.exports = async (port, host) => {
 	const fastify = require("fastify")(fastifyOpts);
 
 	//plugins
-	await require("./plugins")(fastify);
+	await require("./plugins/index.js")(fastify);
 
 	//errors
 	await require("./Errors/index.js")(fastify);
 
 	//routes
-	await require("./routes")(fastify);
+	await require("./routes/index.js")(fastify);
 
 	fastify.listen({ port, host });
 
