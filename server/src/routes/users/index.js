@@ -7,13 +7,13 @@ module.exports = (fastify, opts, done) => {
 	const routes = [
 		{
 			method: "POST",
-			url: "/users",
+			url: "",
 			handler: createUserHandler(fastify),
 			schema: createUserSchema,
 		},
 		{
 			method: "GET",
-			url: "/users/count",
+			url: "/count",
 			handler: countUsersHandler(fastify),
 		},
 	];

@@ -4,7 +4,7 @@ module.exports = (fastify, opts, done) => {
 	const routes = [
 		{
 			method: "POST",
-			url: "/resumes",
+			url: "/",
 			handler: handlers.createResume(),
 		},
 	];

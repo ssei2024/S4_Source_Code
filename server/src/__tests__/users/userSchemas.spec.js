@@ -1,6 +1,6 @@
 // createUserSchema.test.js
 const Fastify = require("fastify");
-const createUserSchema = require("../schemas/users/CreateUser");
+const createUserSchema = require("../../schemas/users/CreateUser");
 
 describe("Create User Schema Validation", () => {
 	let fastify;

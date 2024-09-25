@@ -1,4 +1,4 @@
-module.exports = async (app, fastify) => {
+module.exports = async (fastify) => {
 	await fastify.setErrorHandler(function (error, req, res) {
 		if (error.code === "FST_ERR_VALIDATION")
 			res.code(400).send({ error: "Invalid Inputs!" });
