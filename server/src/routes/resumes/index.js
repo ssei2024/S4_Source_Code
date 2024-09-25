@@ -1,11 +1,11 @@
-const handlers = require("../../handlers/resumes/CreateResume");
+const createResumeHandler = require("../../handlers/resumes/createResume");
 
 module.exports = (fastify, opts, done) => {
 	const routes = [
 		{
 			method: "POST",
 			url: "/",
-			handler: handlers.createResume(),
+			handler: createResumeHandler,
 		},
 	];
 

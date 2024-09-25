@@ -6,4 +6,8 @@ module.exports = async (fastify) => {
 	await fastify.register(require("./resumes"), {
 		prefix: "/resumes",
 	});
+
+	await fastify.register(require("./auth"), {
+		prefix: "/auth",
+	});
 };

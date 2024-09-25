@@ -1,31 +1,23 @@
-const countUsersHandler = require("../../handlers/users/CountUsers");
-const createUserHandler = require("../../handlers/users/CreateUser");
-const editUserHandler = require("../../handlers/users/editUserHandler");
-const getUserHandler = require("../../handlers/users/getUserHandler");
-const getUsersHandler = require("../../handlers/users/getUsersHandler");
-const deleteUsersHandler = require("../../handlers/users/deleteUsersHandler");
+const countUsersHandler = require("../../handlers/users/countUsers");
+const updateUserHandler = require("../../handlers/users/updateUser");
+const getUserHandler = require("../../handlers/users/getUser");
+const getUsersHandler = require("../../handlers/users/getUsers");
+const deleteUsersHandler = require("../../handlers/users/deleteUsers");
 
-const createUserSchema = require("../../schemas/users/CreateUser");
-const editUserSchema = require("../../schemas/users/CreateUser");
+const updateUserSchema = require("../../schemas/users/UpdateUser");
 
 module.exports = (fastify, opts, done) => {
 	const routes = [
-		{
-			method: "POST",
-			url: "/",
-			handler: createUserHandler(fastify),
-			schema: createUserSchema,
-		},
 		{
 			method: "GET",
 			url: "/count",
 			handler: countUsersHandler(fastify),
 		},
 		{
-			method: "PATCH",
+			method: "PUT",
 			url: "/",
-			handler: editUserHandler(fastify),
-			schema: editUserSchema,
+			handler: updateUserHandler(fastify),
+			schema: updateUserSchema,
 		},
 		{
 			method: "GET",
