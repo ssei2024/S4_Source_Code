@@ -1,5 +1,0 @@
-image: docker:latest
-
-echo:
-  script:
-    - docker pull nginx
